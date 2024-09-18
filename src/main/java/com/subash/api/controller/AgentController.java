@@ -19,8 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.subash.api.model.AgentOnboardingEmployee;
 import com.subash.api.model.AgentOnboardingExpEmployee;
-import com.subash.api.model.OnboardingEmployee;
-import com.subash.api.model.OnboardingExpEmployee;
+
 import com.subash.api.model.ReportForOnboardingEmployee;
 import com.subash.api.model.ReportForOnboardingExpEmployee;
 import com.subash.api.model.User;
@@ -31,8 +30,8 @@ import com.subash.api.serviceimpl.RegisterServiceImpl;
 
 @RestController
 @RequestMapping("/agent")
-//@CrossOrigin("http://localhost:3000")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:3000")
+
 public class AgentController {
 	
 	SchoolEmailService schooolEmailService;
@@ -135,10 +134,10 @@ public class AgentController {
 			@RequestParam("verifyFromVerifier") String verifyFromVerifier) {
 
 		try {
-			// Create a new AgentOnboardingExpEmployee instance
+			
 			AgentOnboardingExpEmployee agentOnboardingExpEmployee = new AgentOnboardingExpEmployee();
 
-			// Set fields using setters
+		
 			agentOnboardingExpEmployee.setEmployeeName(employeeName);
 			agentOnboardingExpEmployee.setEmployeeDob(employeeDob);
 			agentOnboardingExpEmployee.setPhoneNumber(phoneNumber);
@@ -170,13 +169,12 @@ public class AgentController {
 			agentOnboardingExpEmployee.setAssignToVerify(assignToVerify);
 			agentOnboardingExpEmployee.setVerifyFromVerifier(verifyFromVerifier);
 
-			// Save AgentOnboardingExpEmployee
 			service.addExpEmployeForAgent(agentOnboardingExpEmployee);
 
 			return ResponseEntity.status(HttpStatus.OK).body("AgentOnboardingExpEmployee added successfully");
 
 		} catch (Exception e) {
-			e.printStackTrace(); // Log the exception for debugging
+			e.printStackTrace(); 
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Failed to add AgentOnboardingExpEmployee");
 		}
@@ -227,22 +225,21 @@ public class AgentController {
 
 	@PostMapping("/sendEmployeeToVerifier")
 	public String sendEmployeeToVerifier(@RequestParam String recordId) {
-		// Logic to handle sending the employee record to the verifier
-
+		
 		int agentOnboardingEmployeeId = Integer.parseInt(recordId);
 		AgentOnboardingEmployee agentOnboardingEmployee = getByEmployee(agentOnboardingEmployeeId);
 		
 		
 		
 		String employeeName = agentOnboardingEmployee.getEmployeeName();
-	    String emailContent = "Please find the attached records for the employee: " + employeeName;
+
 
 	    try {
 	    	String schoolEmail = registerService.findSchoolEmailAddress();
 	    	
 	    	schooolEmailService.sendEmailWithAttachments(
-	    			schoolEmail, // Recipient email
-	            employeeName, // Employee name for the email content
+	    			schoolEmail,
+	            employeeName, 
 	            
 	            agentOnboardingEmployee.getEducationTenth(),
 	            agentOnboardingEmployee.getEducationTwelth()
@@ -250,8 +247,8 @@ public class AgentController {
 	    	
 	    	String collegeEmail = registerService.findCollegeEmailAddress();
 	    	collegeEmailService.sendEmailWithAttachments(
-	    			collegeEmail, // Recipient email
-		            employeeName, // Employee name for the email content
+	    			collegeEmail, 
+		            employeeName, 
 		            agentOnboardingEmployee.getSem1(),
 		            agentOnboardingEmployee.getSem2(),
 		            agentOnboardingEmployee.getSem3(),
@@ -279,7 +276,7 @@ public class AgentController {
 		
 		
 		String employeeName = agentOnboardingExpEmployee.getEmployeeName();
-	    String emailContent = "Please find the attached records for the employee: " + employeeName;
+
 
 	    try {
 String schoolEmail = registerService.findSchoolEmailAddress();

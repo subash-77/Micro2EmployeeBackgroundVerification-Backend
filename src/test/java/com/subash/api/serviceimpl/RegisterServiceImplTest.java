@@ -1,6 +1,6 @@
 package com.subash.api.serviceimpl;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 import static org.mockito.Mockito.doNothing;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,23 +11,7 @@ import org.mockito.Mock;
 import com.subash.api.model.Token;
 import com.subash.api.model.User;
 import com.subash.api.ownrepo.RegisterOwnRepo;
-
-import java.time.Instant;
-import java.util.Date;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import com.subash.api.model.Token;
-import com.subash.api.model.User;
-import com.subash.api.ownrepo.RegisterOwnRepo;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureException;
 
 class RegisterServiceImplTest {
 
@@ -54,7 +38,7 @@ class RegisterServiceImplTest {
 	        sampleToken = new Token();
 	        sampleToken.setToken("sample-token");
 	        sampleToken.setRandomValue("random-value");
-	        //sampleToken.setExpirationDate(new Date(System.currentTimeMillis() + 3600 * 1000)); // 1 hour from now
+	       
 	    }
 
 	@Test
@@ -62,8 +46,6 @@ class RegisterServiceImplTest {
 		doNothing().when(ownrepo).save(sampleUser);
 
 		registerService.addRegister(sampleUser);
-
-		// verify(ownrepo, times(1)).save(sampleUser);
 	}
 
 	
@@ -74,15 +56,6 @@ class RegisterServiceImplTest {
 
 		registerService.addToken(sampleToken);
 
-		// verify(ownrepo, times(1)).saveToken(sampleToken);
 	}
-
-
-
-
-
-
-
-
 
 }

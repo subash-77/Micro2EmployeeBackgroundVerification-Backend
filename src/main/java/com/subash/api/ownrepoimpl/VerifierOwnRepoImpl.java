@@ -6,13 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import com.subash.api.model.AgentOnboardingEmployee;
 import com.subash.api.model.AgentOnboardingExpEmployee;
-import com.subash.api.model.OnboardingEmployee;
+
 import com.subash.api.model.ReportForOnboardingEmployee;
 import com.subash.api.model.ReportForOnboardingExpEmployee;
-import com.subash.api.model.User;
+
 import com.subash.api.model.VerifySource;
-import com.subash.api.ownrepo.AgentOwnRepo;
-import com.subash.api.ownrepo.HrOwnRepo;
+
 import com.subash.api.ownrepo.VerifierOwnRepo;
 
 import jakarta.persistence.EntityManager;

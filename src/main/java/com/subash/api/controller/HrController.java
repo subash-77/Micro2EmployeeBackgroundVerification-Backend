@@ -16,22 +16,20 @@ import com.subash.api.model.AgentOnboardingExpEmployee;
 import com.subash.api.model.OnboardingEmployee;
 import com.subash.api.model.OnboardingExpEmployee;
 import com.subash.api.model.User;
-import com.subash.api.serviceimpl.SchoolEmailService;
 import com.subash.api.serviceimpl.HrServiceImpl;
 
 @RestController
 @RequestMapping("/hr")
-//@CrossOrigin("http://localhost:3000")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:3000")
 public class HrController {
 
-	private SchoolEmailService emailService;
+	
 
 	HrServiceImpl service;
 
-	public HrController(SchoolEmailService emailService, HrServiceImpl service) {
+	public HrController(HrServiceImpl service) {
 		super();
-		this.emailService = emailService;
+
 		this.service = service;
 	}
 
@@ -150,9 +148,7 @@ public class HrController {
 		    	user.setRole(role);
 		    	user.setCompanyName(companyName);
 		    	user.setUserId(1);
-		    	
-		 
-	            // Create an OnboardingExpEmployee instance and set fields
+
 	            OnboardingExpEmployee onboardingExpEmployee = new OnboardingExpEmployee();
 	            onboardingExpEmployee.setEmployeeName(employeeName);
 		        onboardingExpEmployee.setEmployeeDob(employeeDob);

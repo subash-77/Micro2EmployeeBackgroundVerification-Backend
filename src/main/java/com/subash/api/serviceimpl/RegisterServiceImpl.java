@@ -12,7 +12,7 @@ import com.subash.api.service.RegisterService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureException;
+
 
 @Service
 public class RegisterServiceImpl implements RegisterService {

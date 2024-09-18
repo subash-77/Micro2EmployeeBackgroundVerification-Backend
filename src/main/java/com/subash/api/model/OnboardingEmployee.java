@@ -88,7 +88,18 @@ public class OnboardingEmployee {
 	
 	
 
+
+
 	public OnboardingEmployee() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+
+	public OnboardingEmployee(int onboardingEmployeeId, String employeeName, String employeeDob, String phoneNumber,
+			byte[] resume, byte[] educationTenth, byte[] educationTwelth, byte[] sem1, byte[] sem2, byte[] sem3,
+			byte[] sem4, byte[] sem5, byte[] sem6, byte[] sem7, byte[] sem8, byte[] drivingLicense, byte[] aadhaar,
+			String type, String assignToHeadHr, String hrId) {
 		super();
 		this.onboardingEmployeeId = onboardingEmployeeId;
 		this.employeeName = employeeName;
@@ -111,6 +122,7 @@ public class OnboardingEmployee {
 		this.assignToHeadHr = assignToHeadHr;
 		this.hrId = hrId;
 	}
+
 
 	public int getOnboardingEmployeeId() {
 		return onboardingEmployeeId;
