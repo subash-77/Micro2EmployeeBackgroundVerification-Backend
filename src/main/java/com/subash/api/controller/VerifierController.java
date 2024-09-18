@@ -22,8 +22,8 @@ import com.subash.api.serviceimpl.VerifierServiceImpl;
 
 @RestController
 @RequestMapping("/verifier")
-//@CrossOrigin("http://localhost:3000")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:3000")
+
 public class VerifierController {
 
 	VerifierServiceImpl service;
