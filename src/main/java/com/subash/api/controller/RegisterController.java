@@ -24,8 +24,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
 @RequestMapping("/register")
-//@CrossOrigin("http://localhost:3000")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:3000")
+
 
 public class RegisterController {
 
