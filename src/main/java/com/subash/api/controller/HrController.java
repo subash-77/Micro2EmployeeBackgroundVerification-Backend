@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,7 +65,7 @@ public class HrController {
 
 	    try {
 	    	
-	        // Create an OnboardingEmployee instance and set fields
+	        
 	    	User user = new User();
 	    	user.setUserName(userName);
 	    	user.setEmail(email);
@@ -96,20 +95,14 @@ public class HrController {
 	        onboardingEmployee.setType(type);
 	        onboardingEmployee.setAssignToHeadHr(assignToHeadHr);
 	        onboardingEmployee.setHrId(hrId);
-	        //onboardingEmployee.setHrId("0");
-	        
-	        
+
 	        user.getOnBoardingEmployee().add(onboardingEmployee);
 	        
-	        
-
-//	        service.addEmployee(onboardingEmployee);
 	        service.addUserWithEmployee(user);
 	        msg += "addSuccess";
 	    } catch (Exception e) {
 	        msg += "addFailure";
-	        // Log the exception for further analysis
-//	        e.printStackTrace();
+
 	    }
 	    return msg;
 	}
@@ -130,6 +123,7 @@ public class HrController {
 	            @RequestParam("sem6") MultipartFile sem6,
 	            @RequestParam("sem7") MultipartFile sem7,
 	            @RequestParam("sem8") MultipartFile sem8,
+	            @RequestParam("expRecord") MultipartFile expRecord,
 	            @RequestParam("drivingLicense") MultipartFile drivingLicense,
 	            @RequestParam("aadhaar") MultipartFile aadhaar,
 	            @RequestParam("type") String type,
@@ -174,6 +168,7 @@ public class HrController {
 	            onboardingExpEmployee.setSem6(sem6.getBytes());
 	            onboardingExpEmployee.setSem7(sem7.getBytes());
 	            onboardingExpEmployee.setSem8(sem8.getBytes());
+	            onboardingExpEmployee.setExpRecord(expRecord.getBytes());
 	            onboardingExpEmployee.setDrivingLicense(drivingLicense.getBytes());
 	            onboardingExpEmployee.setAadhaar(aadhaar.getBytes());
 	            onboardingExpEmployee.setType(type);
@@ -185,17 +180,13 @@ public class HrController {
 	            onboardingExpEmployee.setReferenceNumber(referenceNumber);
 	            
 	            user.getOnBoardingExpEmployee().add(onboardingExpEmployee);
-	            
-	            
-	            
 
-	            // Save the OnboardingExpEmployee entity
 	            service.addUserWithEmployee(user);
 
 	            msg = "addSuccess";
 	        } catch (Exception e) {
 	            msg = "addFailure";
-	            e.printStackTrace(); // Logging the exception for debugging
+	            e.printStackTrace(); 
 	        }
 
 	        return msg;
@@ -215,7 +206,6 @@ public class HrController {
 	
 	@PostMapping("/updateonboardingemployeeId/{id}")
 	public String updateOnboardingEmployee(@PathVariable("id") int id, @RequestParam("hrId") String hrId) {
-	    // Call the service method with the ID and HRID
 		int subHrId = Integer.parseInt(hrId);
 	    service.updateOnBoardEmployee(id, subHrId);
 	    return "Updated Successfully";
@@ -223,7 +213,6 @@ public class HrController {
 
 	@PostMapping("/updateonboardingexpemployeeId/{id}")
 	public String updateOnboardingExpEmployee(@PathVariable("id") int id, @RequestParam("hrId") String hrId) {
-	    // Call the service method with the ID and HRID
 		int subHrId = Integer.parseInt(hrId);
 	    service.updateOnBoardExpEmployee(id, subHrId);
 	    return "Updated Successfully";
@@ -237,10 +226,7 @@ public class HrController {
 	
 	@GetMapping("/allOnBoardingExpEmployee")
 	public List<AgentOnboardingExpEmployee> getOnBoardingExpEmployeeAssignedWithHeadHr() {
-		return service.getAllOnboardingExpEmployee();
-		
-		
-		
+		return service.getAllOnboardingExpEmployee();	
 	}
 	
 	@GetMapping("/allResolvedOnBoardingEmployee")
@@ -251,9 +237,6 @@ public class HrController {
 	@GetMapping("/allResolvedOnBoardingExpEmployee")
 	public List<OnboardingExpEmployee> getOnBoardingExpEmployee() {
 		return service.getResolveAllOnboardingExpEmployee();
-		
-		
-		
 	}
 
 }

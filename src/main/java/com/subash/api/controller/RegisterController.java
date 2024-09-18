@@ -81,17 +81,7 @@ public class RegisterController {
 	            String role = service.findRole(user.getEmail());
 	            
 	            String company = service.findCompanyName(user.getEmail());
-	            int userId = service.findPatientId(user.getEmail());
-
-
-	           
-//	            if ("psychiatrist".equals(role) && psychiatristLogin != null) {
-//	                return "validCredentials:" + token + ":" + role + ":" + psychiatristLogin.getPsychiatristId();
-//	            } else {
-//	                return "validCredentials:" + token + ":" + role + ":" + patientId+":"+patientId; 
-//	            }
-//	        } else {
-//	            
+	            int userId = service.findPatientId(user.getEmail()); 
 	            return "validCredentials:" + token + ":" + role + ":" + userId +":" + company ;
 	        }
 	        
@@ -166,10 +156,7 @@ public class RegisterController {
 				 String agentEmail = user.getEmail();
 		            String password = user.getPassword();
 		            
-		            // Define email subject
 		            String subject = "Regarding Agent Login Credentials";
-		            
-		            // Craft the email content
 		            String agentText = String.format(
 		                "Dear %s,%n%n" +
 		                "Welcome to our system! Here are your login credentials:%n%n" +
@@ -178,12 +165,11 @@ public class RegisterController {
 		                "Please keep your credentials safe and secure. If you have any questions or need assistance, feel free to contact our support team.%n%n" +
 		                "Best regards,%n" +
 		                "The Support Team",
-		                user.getUserName(),  // Assuming User class has a getName() method
+		                user.getUserName(),  
 		                agentEmail,
 		                password
 		            );
 		            
-		            // Send the email with credentials
 		            agentService.sendEmail(agentEmail, subject, agentText);
 				
 				msg += "addSuccess";

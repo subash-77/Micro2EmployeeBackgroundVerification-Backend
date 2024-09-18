@@ -99,9 +99,9 @@ public class RegisterOwnRepoImpl implements RegisterOwnRepo {
 		
 		 User user = entityManager.find(User.class, id);
 	        if (user != null) {
-	            // Update the password
+	           
 	            user.setPassword(password);
-	            // Merge the updated user entity back into the persistence context
+	           
 	            entityManager.merge(user);
 	        }
 		

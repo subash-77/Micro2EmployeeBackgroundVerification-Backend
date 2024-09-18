@@ -49,8 +49,6 @@ public class VerifierController {
 		try {
 			
 			System.out.println(companyName);
-			// Create a new ReportForOnboardingEmployee instance
-			
 			if(recordType.equals("Employee")) {
 				ReportForOnboardingEmployee reportOne = new ReportForOnboardingEmployee();
 				
@@ -64,9 +62,7 @@ public class VerifierController {
 				service.addReportForEmployee(reportOne);
 				
 				AgentOnboardingEmployee agentOnboardingEmployee =  agentService.getByIdOne(documentId);
-				
-								
-				
+
 				if(status.equalsIgnoreCase("approved")) {
 					agentOnboardingEmployee.setVerifyFromVerifier("Approved");
 					agentOnboardingEmployee.setVerifyStatus("Verified");
@@ -94,7 +90,6 @@ public class VerifierController {
 			} else {
 				
 				ReportForOnboardingExpEmployee reportTwo = new ReportForOnboardingExpEmployee();
-				
 				reportTwo.setHrId(hrId);
 				reportTwo.setReport(content);
 				reportTwo.setOnboardingExpEmployeeId(onboardingEmployeeId);
@@ -113,6 +108,8 @@ public class VerifierController {
 						agentOnboardingExpEmployee.setSchoolStatus("Approved");
 					} else if(companyName.equalsIgnoreCase("college")) {
 						agentOnboardingExpEmployee.setCollegeStatus("Approved");
+					} else if(companyName.equalsIgnoreCase("company")) {
+						agentOnboardingExpEmployee.setExpRecordStatus("Approved");
 					}
 				} else {
 					agentOnboardingExpEmployee.setVerifyFromVerifier("Rejected");
@@ -121,6 +118,8 @@ public class VerifierController {
 						agentOnboardingExpEmployee.setSchoolStatus("Rejected");
 					} else if(companyName.equalsIgnoreCase("college")) {
 						agentOnboardingExpEmployee.setCollegeStatus("Rejected");
+					} else if(companyName.equalsIgnoreCase("company")) {
+						agentOnboardingExpEmployee.setExpRecordStatus("Rejected");
 					}
 				}
 				
@@ -136,34 +135,6 @@ public class VerifierController {
 					.body("Failed to add ReportForOnboardingEmployee");
 		}
 	}
-//
-//	@PostMapping("/addReportForOnboardingExpEmployee")
-//	public ResponseEntity<String> addReportForOnboardingExpEmployee(@RequestParam("hrId") int hrId,
-//			@RequestParam("onboardingExpEmployeeId") int onboardingExpEmployeeId,
-//			@RequestParam("agentOnboardingExpEmployeeId") int agentOnboardingExpEmployeeId, @RequestParam("status") String status) {
-//
-//		try {
-//			// Create a new ReportForOnboardingEmployee instance
-//			ReportForOnboardingExpEmployee report = new ReportForOnboardingExpEmployee();
-//
-//			// Set fields using setters
-//			report.setHrId(hrId);
-//			report.setOnboardingExpEmployeeId(onboardingExpEmployeeId);
-//			report.setAgentOnboardingExpEmployeeId(agentOnboardingExpEmployeeId);
-//			report.setStatus(status);
-//
-//			// Save ReportForOnboardingEmployee
-//			service.addReportForExpEmployee(report);
-//
-//			return ResponseEntity.status(HttpStatus.OK).body("ReportForOnboardingEmployee added successfully");
-//
-//		} catch (Exception e) {
-//			e.printStackTrace(); // Log the exception for debugging
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//					.body("Failed to add ReportForOnboardingEmployee");
-//		}
-//	}
-
 	@GetMapping("/getAllEmployee")
 	public List<AgentOnboardingEmployee> getOnBoardingEmployeeAssignedVerifyStatusYes() {
 		return service.getAllAgentOnboardingEmployee();
@@ -186,7 +157,7 @@ public class VerifierController {
 			@RequestParam("aadhaar") MultipartFile aadhaar) {
 
 		try {
-			// Create a new AgentOnboardingEmployee instance
+			
 			VerifySource verifySource = new VerifySource();
 
 		
@@ -205,15 +176,13 @@ public class VerifierController {
 			verifySource.setAadhaar(aadhaar.getBytes());
 			
 
-			// Save AgentOnboardingEmployee
 			service.addVerifyRecords(verifySource);
 
 			return "success";
-			// return ResponseEntity.status(HttpStatus.OK).body("AgentOnboardingEmployee
-			// added successfully");
+			
 
 		} catch (Exception e) {
-			e.printStackTrace(); // Log the exception for debugging
+			e.printStackTrace(); 
 			return "failure";
 		}
 	}

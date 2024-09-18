@@ -42,7 +42,7 @@ public class VerifierOwnRepoImpl implements VerifierOwnRepo {
 	
 	@Override
 	public List<AgentOnboardingEmployee> getAllAgentOnboardingEmployee() {
-//		return entityManager.createQuery("from AgentOnboardingEmployee", AgentOnboardingEmployee.class).getResultList();
+
 		String query = "SELECT a FROM AgentOnboardingEmployee a WHERE a.assignToVerify = :assignToVerify";
 	    return entityManager.createQuery(query, AgentOnboardingEmployee.class)
 	                        .setParameter("assignToVerify", "Yes")
@@ -51,7 +51,7 @@ public class VerifierOwnRepoImpl implements VerifierOwnRepo {
 	
 	@Override
 	public List<AgentOnboardingExpEmployee> getAllAgentOnboardingExpEmployee() {
-//		return entityManager.createQuery("from AgentOnboardingExpEmployee", AgentOnboardingExpEmployee.class).getResultList();
+
 		String query = "SELECT a FROM AgentOnboardingExpEmployee a WHERE a.assignToVerify = :assignToVerify";
 	    return entityManager.createQuery(query, AgentOnboardingExpEmployee.class)
 	                        .setParameter("assignToVerify", "Yes")

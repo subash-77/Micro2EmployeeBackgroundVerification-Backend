@@ -43,8 +43,6 @@ public class AgentController {
 	
 	RegisterServiceImpl registerService;
 	
-
-
     private JavaMailSender mailSender;
 
 	public AgentController(SchoolEmailService schooolEmailService, CollegeEmailService collegeEmailService,
@@ -75,10 +73,10 @@ public class AgentController {
 			@RequestParam("verifyFromVerifier") String verifyFromVerifier) {
 
 		try {
-			// Create a new AgentOnboardingEmployee instance
+			
 			AgentOnboardingEmployee agentOnboardingEmployee = new AgentOnboardingEmployee();
 
-			// Set fields using setters
+			
 			agentOnboardingEmployee.setEmployeeName(employeeName);
 			agentOnboardingEmployee.setEmployeeDob(employeeDob);
 			agentOnboardingEmployee.setPhoneNumber(phoneNumber);
@@ -104,18 +102,14 @@ public class AgentController {
 			agentOnboardingEmployee.setAssignToVerify(assignToVerify);
 			agentOnboardingEmployee.setVerifyFromVerifier(verifyFromVerifier);
 
-			// Save AgentOnboardingEmployee
 			service.addEmployeForAgent(agentOnboardingEmployee);
 
 			return "success";
-			// return ResponseEntity.status(HttpStatus.OK).body("AgentOnboardingEmployee
-			// added successfully");
 
 		} catch (Exception e) {
-			e.printStackTrace(); // Log the exception for debugging
+			e.printStackTrace(); 
 			return "failure";
-			// return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed
-			// to add AgentOnboardingEmployee");
+			
 		}
 	}
 
@@ -127,7 +121,9 @@ public class AgentController {
 			@RequestParam("sem2") MultipartFile sem2, @RequestParam("sem3") MultipartFile sem3,
 			@RequestParam("sem4") MultipartFile sem4, @RequestParam("sem5") MultipartFile sem5,
 			@RequestParam("sem6") MultipartFile sem6, @RequestParam("sem7") MultipartFile sem7,
-			@RequestParam("sem8") MultipartFile sem8, @RequestParam("drivingLicense") MultipartFile drivingLicense,
+			@RequestParam("sem8") MultipartFile sem8,
+			@RequestParam("expRecord") MultipartFile expRecord,
+			@RequestParam("drivingLicense") MultipartFile drivingLicense,
 			@RequestParam("aadhaar") MultipartFile aadhaar, @RequestParam("type") String type,
 			@RequestParam("referenceName") String referenceName,
 			@RequestParam("referencePosition") String referencePosition,
@@ -157,6 +153,7 @@ public class AgentController {
 			agentOnboardingExpEmployee.setSem6(sem6.getBytes());
 			agentOnboardingExpEmployee.setSem7(sem7.getBytes());
 			agentOnboardingExpEmployee.setSem8(sem8.getBytes());
+			agentOnboardingExpEmployee.setExpRecord(expRecord.getBytes());
 			agentOnboardingExpEmployee.setDrivingLicense(drivingLicense.getBytes());
 			agentOnboardingExpEmployee.setAadhaar(aadhaar.getBytes());
 			agentOnboardingExpEmployee.setType(type);
@@ -275,7 +272,7 @@ public class AgentController {
 	
 	@PostMapping("/sendExperienceToVerifier")
 	public String sendExperienceToVerifier(@RequestParam String recordId) {
-		// Logic to handle sending the employee record to the verifier
+		
 		int agentOnboardingExpEmployeeId = Integer.parseInt(recordId);
 		
 		AgentOnboardingExpEmployee agentOnboardingExpEmployee = getByExpEmployee(agentOnboardingExpEmployeeId);
@@ -288,8 +285,8 @@ public class AgentController {
 String schoolEmail = registerService.findSchoolEmailAddress();
 	    	
 	    	schooolEmailService.sendEmailWithAttachments(
-	    			schoolEmail, // Recipient email
-	            employeeName, // Employee name for the email content
+	    			schoolEmail, 
+	            employeeName, 
 	            
 	            agentOnboardingExpEmployee.getEducationTenth(),
 	            agentOnboardingExpEmployee.getEducationTwelth()
@@ -297,8 +294,8 @@ String schoolEmail = registerService.findSchoolEmailAddress();
 	    	
 	    	String collegeEmail = registerService.findCollegeEmailAddress();
 	    	collegeEmailService.sendEmailWithAttachments(
-	    			collegeEmail, // Recipient email
-		            employeeName, // Employee name for the email content
+	    			collegeEmail, 
+		            employeeName, 
 		            agentOnboardingExpEmployee.getSem1(),
 		            agentOnboardingExpEmployee.getSem2(),
 		            agentOnboardingExpEmployee.getSem3(),
@@ -326,6 +323,8 @@ String schoolEmail = registerService.findSchoolEmailAddress();
 		return service.getByIdTwo(id);
 	}
 	
+	
+	
 	@GetMapping("/GetAllReportForEmployee")
 	public List<ReportForOnboardingEmployee> getAllReportForEmployee() {
 		return service.getAllReportForEmployee();
@@ -350,7 +349,7 @@ String schoolEmail = registerService.findSchoolEmailAddress();
 	}
 	
 
-    @Scheduled(cron = "0 0 0 * * ?") // Runs daily at midnight
+    @Scheduled(cron = "0 0 0 * * ?") 
     @PostMapping("/pushNotification")
     public void addAgentOnboardingEmployee() {
         if (LocalDate.now().isAfter(lastSentDate)) {
@@ -363,7 +362,7 @@ String schoolEmail = registerService.findSchoolEmailAddress();
             boolean shouldSendSchoolEmail = false;
             boolean shouldSendCollegeEmail = false;
 
-            // Check AgentOnboardingEmployee statuses
+           
             for (AgentOnboardingEmployee employee : agentOnboardingEmployees) {
                 if (isStatusNullOrNotApproved(employee.getSchoolStatus())) {
                     shouldSendSchoolEmail = true;
@@ -373,7 +372,7 @@ String schoolEmail = registerService.findSchoolEmailAddress();
                 }
             }
 
-            // Check AgentOnboardingExpEmployee statuses
+           
             for (AgentOnboardingExpEmployee expEmployee : agentOnboardingExpEmployees) {
                 if (isStatusNullOrNotApproved(expEmployee.getSchoolStatus())) {
                     shouldSendSchoolEmail = true;
@@ -383,7 +382,7 @@ String schoolEmail = registerService.findSchoolEmailAddress();
                 }
             }
 
-            // Send emails based on the conditions
+            
             if (shouldSendSchoolEmail) {
                 sendEmail(schoolEmail, "Reminder: Pending Approvals", "There are pending approvals for school-related onboarding employees.");
             }
@@ -392,7 +391,7 @@ String schoolEmail = registerService.findSchoolEmailAddress();
                 sendEmail(collegeEmail, "Reminder: Pending Approvals", "There are pending approvals for college-related onboarding employees.");
             }
 
-            // Update the last sent date
+            
             lastSentDate = LocalDate.now();
         }
     }
@@ -409,7 +408,5 @@ String schoolEmail = registerService.findSchoolEmailAddress();
         mailSender.send(message);
         System.out.println("Mail Sended");
     }
-
-	
 
 }

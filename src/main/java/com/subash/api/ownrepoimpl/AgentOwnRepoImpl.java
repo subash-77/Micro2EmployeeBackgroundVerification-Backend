@@ -32,12 +32,26 @@ public class AgentOwnRepoImpl implements AgentOwnRepo {
 	
 	@Override
 	public void save(AgentOnboardingEmployee agentOnboardingEmployee) {
-		entityManager.merge(agentOnboardingEmployee);
+		int onboardingEmployeeId = agentOnboardingEmployee.getOnboardingEmployeeId();
+
+	    AgentOnboardingEmployee existingEmployee = entityManager.find(AgentOnboardingEmployee.class, onboardingEmployeeId);
+	    
+	    if (existingEmployee == null) {
+	        entityManager.merge(agentOnboardingEmployee);
+	    } 
 	}
 
 	@Override
 	public void save(AgentOnboardingExpEmployee agentOnboardingExpEmployee) {
-		entityManager.merge(agentOnboardingExpEmployee);
+		
+		int onboardingExpEmployeeId = agentOnboardingExpEmployee.getOnboardingExpEmployeeId();
+
+	    AgentOnboardingExpEmployee existingEmployee = entityManager.find(AgentOnboardingExpEmployee.class, onboardingExpEmployeeId);
+	    
+	    if (existingEmployee == null) {
+	        entityManager.merge(agentOnboardingExpEmployee);
+	    } 
+		
 		
 	}
 	
@@ -54,7 +68,7 @@ public class AgentOwnRepoImpl implements AgentOwnRepo {
 	 public List<User> getSubAgentByRole() {
 	        String jpql = "SELECT u FROM User u WHERE u.role = :role";
 	        TypedQuery<User> query = entityManager.createQuery(jpql, User.class);
-	        query.setParameter("role", "agent"); // Hardcoded role value
+	        query.setParameter("role", "agent"); 
 	        return query.getResultList();
 	    }
 
@@ -63,13 +77,13 @@ public class AgentOwnRepoImpl implements AgentOwnRepo {
 		AgentOnboardingEmployee employee = entityManager.find(AgentOnboardingEmployee.class, recordId);
 
 	    if (employee != null) {
-	        // Update the subAgentAppoint field with the agentId
+	       
 	        employee.setSubAgentAppoint(agentId.toString());
 
-	        // Update the verifyStatus field to "processing"
+	        
 	        employee.setVerifyStatus("processing");
 
-	        // Merge the changes to the database
+	       
 	        entityManager.merge(employee);
 	    } else {
 	        throw new EntityNotFoundException("Employee with ID " + recordId + " not found");
@@ -84,13 +98,13 @@ public class AgentOwnRepoImpl implements AgentOwnRepo {
 		AgentOnboardingExpEmployee employee = entityManager.find(AgentOnboardingExpEmployee.class, recordId);
 
 	    if (employee != null) {
-	        // Update the subAgentAppoint field with the agentId
+	       
 	        employee.setSubAgentAppoint(agentId.toString());
 
-	        // Update the verifyStatus field to "processing"
+	      
 	        employee.setVerifyStatus("processing");
 
-	        // Merge the changes to the database
+	        
 	        entityManager.merge(employee);
 	    } else {
 	        throw new EntityNotFoundException("Employee with ID " + recordId + " not found");
@@ -100,25 +114,25 @@ public class AgentOwnRepoImpl implements AgentOwnRepo {
 
 	@Override
 	public List<AgentOnboardingEmployee> getAgentEmployee(String agentId) {
-		 // Define the JPQL query
+		
         String jpql = "SELECT a FROM AgentOnboardingEmployee a WHERE a.subAgentAppoint = :agentId";
-        // Create a TypedQuery
+       
         TypedQuery<AgentOnboardingEmployee> query = entityManager.createQuery(jpql, AgentOnboardingEmployee.class);
-        // Set the parameter
+      
         query.setParameter("agentId", agentId);
-        // Execute the query and return the results
+      
         return query.getResultList();
 	}
 
 	@Override
 	public List<AgentOnboardingExpEmployee> getAgentExpEmployee(String agentId) {
-		 // Define the JPQL query
+		 
         String jpql = "SELECT a FROM AgentOnboardingExpEmployee a WHERE a.subAgentAppoint = :agentId";
-        // Create a TypedQuery
+       
         TypedQuery<AgentOnboardingExpEmployee> query = entityManager.createQuery(jpql, AgentOnboardingExpEmployee.class);
-        // Set the parameter
+        
         query.setParameter("agentId", agentId);
-        // Execute the query and return the results
+       
         return query.getResultList();
 	}
 
@@ -160,22 +174,22 @@ public class AgentOwnRepoImpl implements AgentOwnRepo {
 	@Override
 	public List<AgentOnboardingEmployee> getByHrIdForEmployee(String userId) {
 		String jpql = "SELECT a FROM AgentOnboardingEmployee a WHERE a.hrId = :userId";
-        // Create a TypedQuery
+       
         TypedQuery<AgentOnboardingEmployee> query = entityManager.createQuery(jpql, AgentOnboardingEmployee.class);
-        // Set the parameter
+        
         query.setParameter("userId", userId);
-        // Execute the query and return the results
+        
         return query.getResultList();
 	}
 
 	@Override
 	public List<AgentOnboardingExpEmployee> getByHrIdForExpEmployee(String userId) {
 		String jpql = "SELECT a FROM AgentOnboardingExpEmployee a WHERE a.hrId = :userId";
-        // Create a TypedQuery
+       
         TypedQuery<AgentOnboardingExpEmployee> query = entityManager.createQuery(jpql, AgentOnboardingExpEmployee.class);
-        // Set the parameter
+        
         query.setParameter("userId", userId);
-        // Execute the query and return the results
+        
         return query.getResultList();
 	}
 

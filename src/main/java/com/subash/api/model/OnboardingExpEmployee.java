@@ -67,6 +67,10 @@ public class OnboardingExpEmployee {
 	@Lob
 	@Column(name = "sem8", length = 1000000000)
 	private byte[] sem8;
+	
+	@Lob
+	@Column(name = "exprecord", length = 1000000000)
+	private byte[] expRecord;
 
 	@Lob
 	@Column(name = "drivingLicense", length = 1000000000)
@@ -106,9 +110,9 @@ public class OnboardingExpEmployee {
 
 	public OnboardingExpEmployee(int onboardingExpEmployeeId, String employeeName, String employeeDob,
 			String phoneNumber, byte[] resume, byte[] educationTenth, byte[] educationTwelth, byte[] sem1, byte[] sem2,
-			byte[] sem3, byte[] sem4, byte[] sem5, byte[] sem6, byte[] sem7, byte[] sem8, byte[] drivingLicense,
-			byte[] aadhaar, String type, String referenceName, String referencePosition, String workDuration,
-			String referenceNumber, String assignToHeadHr, String hrId) {
+			byte[] sem3, byte[] sem4, byte[] sem5, byte[] sem6, byte[] sem7, byte[] sem8, byte[] expRecord,
+			byte[] drivingLicense, byte[] aadhaar, String type, String referenceName, String referencePosition,
+			String workDuration, String referenceNumber, String assignToHeadHr, String hrId) {
 		super();
 		this.onboardingExpEmployeeId = onboardingExpEmployeeId;
 		this.employeeName = employeeName;
@@ -125,6 +129,7 @@ public class OnboardingExpEmployee {
 		this.sem6 = sem6;
 		this.sem7 = sem7;
 		this.sem8 = sem8;
+		this.expRecord = expRecord;
 		this.drivingLicense = drivingLicense;
 		this.aadhaar = aadhaar;
 		this.type = type;
@@ -287,6 +292,16 @@ public class OnboardingExpEmployee {
 	}
 
 
+	public byte[] getExpRecord() {
+		return expRecord;
+	}
+
+
+	public void setExpRecord(byte[] expRecord) {
+		this.expRecord = expRecord;
+	}
+
+
 	public byte[] getDrivingLicense() {
 		return drivingLicense;
 	}
@@ -385,12 +400,15 @@ public class OnboardingExpEmployee {
 				+ Arrays.toString(educationTwelth) + ", sem1=" + Arrays.toString(sem1) + ", sem2="
 				+ Arrays.toString(sem2) + ", sem3=" + Arrays.toString(sem3) + ", sem4=" + Arrays.toString(sem4)
 				+ ", sem5=" + Arrays.toString(sem5) + ", sem6=" + Arrays.toString(sem6) + ", sem7="
-				+ Arrays.toString(sem7) + ", sem8=" + Arrays.toString(sem8) + ", drivingLicense="
-				+ Arrays.toString(drivingLicense) + ", aadhaar=" + Arrays.toString(aadhaar) + ", type=" + type
-				+ ", referenceName=" + referenceName + ", referencePosition=" + referencePosition + ", workDuration="
-				+ workDuration + ", referenceNumber=" + referenceNumber + ", assignToHeadHr=" + assignToHeadHr
-				+ ", hrId=" + hrId + "]";
+				+ Arrays.toString(sem7) + ", sem8=" + Arrays.toString(sem8) + ", expRecord="
+				+ Arrays.toString(expRecord) + ", drivingLicense=" + Arrays.toString(drivingLicense) + ", aadhaar="
+				+ Arrays.toString(aadhaar) + ", type=" + type + ", referenceName=" + referenceName
+				+ ", referencePosition=" + referencePosition + ", workDuration=" + workDuration + ", referenceNumber="
+				+ referenceNumber + ", assignToHeadHr=" + assignToHeadHr + ", hrId=" + hrId + "]";
 	}
+
+
+	
 
 	
 
